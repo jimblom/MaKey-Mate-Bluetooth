@@ -1,0 +1,1 @@
+Example code for the MaKey Mate Bluetooth addon for the MaKey MaKey.
