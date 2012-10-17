@@ -47,14 +47,18 @@ uint8_t makeyMateClass::begin(char * name)
   while (!enterCommandMode())
     delay(100);
   delay(100);
-  bluetooth.println("SA,0");	// SET authentication mode to 0
+  bluetooth.println("SA,1");	// enable authentication
   delay(100);
   bluetooth.println("SW,80A0");	// Deep sleep mode, 100ms sleeps - saves about 15mA when idling
   //bluetooth.println("SW,0000");  // No sleep mode, higher current
   delay(100);
   bluetooth.println("SQ,16");	// optimize for short bursts of data
   delay(100);
-  setHIDMode();
+  bluetooth.println("SM,4"); // auto-connect (DTR) mode
+  delay(100);
+  bluetooth.println("ST,255");  // no config timer
+  delay(100);
+  bluetooth.println("S~,6");  //setHIDMode();
   delay(100);
   setKeyboardMouseMode();
   delay(100);
