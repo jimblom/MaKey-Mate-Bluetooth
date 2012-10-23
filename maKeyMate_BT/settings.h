@@ -17,14 +17,14 @@
 int keyCodes[NUM_INPUTS] = {
   // top side of the makey makey board
  
-  KEY_UP_ARROW,     // up arrow pad
+  /*KEY_UP_ARROW,     // up arrow pad
   KEY_DOWN_ARROW,   // down arrow pad
   KEY_LEFT_ARROW,   // left arrow pad
   KEY_RIGHT_ARROW,  // right arrow pad
   ' ',              // space button pad
-  MOUSE_LEFT,       // click button pad
+  MOUSE_LEFT,       // click button pad*/
   
-  /*MOUSE_MOVE_UP,  // up arrow pad
+  MOUSE_MOVE_UP,  // up arrow pad
   MOUSE_MOVE_DOWN,  // down arrow pad
   MOUSE_MOVE_LEFT,  // left arrow pad
   MOUSE_MOVE_RIGHT, // right arrow pad

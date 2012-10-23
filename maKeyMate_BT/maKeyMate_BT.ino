@@ -118,7 +118,7 @@ void danceLeds();
 void updateOutLEDs();
 
 makeyMateClass makeyMate;
-
+char makeyMateName[] = "MaKeyMate-JL\r";
 //////////////////////
 // SETUP /////////////
 //////////////////////
@@ -129,7 +129,7 @@ void setup()
   initializeInputs();
   danceLeds();
   //
-  makeyMate.begin("MakeyMate-BT\r");
+  makeyMate.begin(makeyMateName);
   makeyMate.connect();
 }
 
@@ -146,7 +146,7 @@ void loop()
   sendMouseMovementEvents(); // Step 6: Send mouse movement
   cycleLEDs();  // Step 7: Update U/D/L/R/Space/Click LEDs
   updateOutLEDs();  // Step 8: Update output LEDs (K/M)
-  //addDelay();
+  addDelay();
 }
 
 
@@ -695,7 +695,7 @@ void checkSequence(int pressedKey, int * expectedSequence)
   if (sequenceIndex == SEQUENCE_LENGTH)
   {
     danceLeds();
-    makeyMate.begin("MakeyMate-BT\r");
+    //makeyMate.begin(makeyMateName);
     makeyMate.connect();
     sequenceIndex = 0;
   }
