@@ -46,6 +46,7 @@ uint8_t makeyMateClass::begin(char * name)
 
   setAuthentication(1);  // enable authentication
   setName(name);  // Set the module name
+  setMode(0);  // slave mode, worth trying mode 4 (auto dtr) as well 
   
   /* I'm torn on setting sleep mode. If you care about a low latency connection
    keep sleep mode set to 0000. You can save about 15mA of current consumption
@@ -56,10 +57,8 @@ uint8_t makeyMateClass::begin(char * name)
   
   /* These I wouldn't recommend changing. These settings are required for HID
      use and sending Keyboard and Mouse commands */
-  setMode(0);  // auto-connect dtr mode
   setKeyboardMouseMode();  // bluetooth.println("SH,0030");
-  
-  
+    
   // We must reboot if we're changing the mode to HID mode.
   // If you've already have the module in HID mode, this can be commented out
   if (!getHIDMode())
