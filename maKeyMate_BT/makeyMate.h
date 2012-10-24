@@ -175,7 +175,6 @@ public:
   makeyMateClass();
   uint8_t begin(char * name);
   uint8_t connect();
-  uint8_t connect(char * address);
   uint8_t keyPress(uint8_t k);
   uint8_t keyRelease(uint8_t k);
   void moveMouse(uint8_t b, uint8_t x, uint8_t y);
