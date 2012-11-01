@@ -56,7 +56,6 @@ typedef struct {
   boolean isKey;
 } 
 MakeyMakeyInput;
-
 MakeyMakeyInput inputs[NUM_INPUTS];
 
 ///////////////////////////////////
@@ -93,14 +92,6 @@ int loopTime = 0;
 int prevTime = 0;
 int loopCounter = 0;
 
-// button logger
-const byte SEQUENCE_LENGTH = 6;
-int buttonSequence[SEQUENCE_LENGTH] = {0, 0, 0, 0, 0, 0};
-int sequenceIndex = 0;
-int sequenceInterval = 1000;  // in ms
-
-int resetSequence[SEQUENCE_LENGTH] = {0, 1, 2, 3, 4, 5};  // u, d, l, r, space, click
-
 ///////////////////////////
 // FUNCTIONS //////////////
 ///////////////////////////
@@ -117,8 +108,22 @@ void cycleLEDs();
 void danceLeds();
 void updateOutLEDs();
 
-makeyMateClass makeyMate;
-char makeyMateName[] = "MaKeyMate-JL\r";
+///////////////////////////
+// Bluetooth Mate Stuff ///
+///////////////////////////
+makeyMateClass makeyMate;  // create a makeyMateClass object named makeyMate
+// This defines the name of the Bluetooth Mate. This string
+// can be up to 20 characters long, but it must be terminated
+// with a \r character.
+char makeyMateName[] = "MaKeyMate\r";
+
+// button logger stuff:
+const byte SEQUENCE_LENGTH = 6;
+int buttonSequence[SEQUENCE_LENGTH] = {0, 0, 0, 0, 0, 0};
+int sequenceIndex = 0;
+int sequenceInterval = 1000;  // in ms
+int resetSequence[SEQUENCE_LENGTH] = {0, 1, 2, 3, 4, 5};  // u->d->l->r->space->click
+
 //////////////////////
 // SETUP /////////////
 //////////////////////
@@ -128,9 +133,9 @@ void setup()
   initializeArduino();
   initializeInputs();
   danceLeds();
-  //
-  makeyMate.begin(makeyMateName);
-  makeyMate.connect();
+  
+  makeyMate.begin(makeyMateName);  // Initialize the bluetooth mate
+  makeyMate.connect();  // Attempt to connect to a stored remote address
 }
 
 ////////////////////
@@ -679,6 +684,11 @@ void danceLeds()
   }
 }
 
+// This function checks if a recent key press is part of an
+// expected sequence of button presses. If the expected
+// sequence is received, we attempt to connect to a stored
+// remote address. By default the expected sequence is:
+// Up -> Down -> Left -> Right -> Space -> Click
 void checkSequence(int pressedKey, int * expectedSequence)
 {
   buttonSequence[sequenceIndex] = pressedKey;
@@ -694,9 +704,8 @@ void checkSequence(int pressedKey, int * expectedSequence)
   sequenceIndex = (sequenceIndex++) % SEQUENCE_LENGTH;
   if (sequenceIndex == SEQUENCE_LENGTH)
   {
-    danceLeds();
-    //makeyMate.begin(makeyMateName);
-    makeyMate.connect();
+    danceLeds();  // good to indicate sequence was reeived
+    makeyMate.connect();  // attempt to connect
     sequenceIndex = 0;
   }
 }

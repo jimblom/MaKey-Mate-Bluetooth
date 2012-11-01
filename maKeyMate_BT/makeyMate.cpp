@@ -325,7 +325,7 @@ uint8_t makeyMateClass::setName(char * name)
     bluetooth.flush();	// Get rid of any characters in the buffer, we'll need to check it fresh
 
   bluetooth.print("SN,");
-  for (int i=0; i<15; i++)
+  for (int i=0; i<20; i++)
   {
     if (name[i] != '\r')
       bluetooth.write(name[i]);
